@@ -20,14 +20,13 @@ def find_files(suffix, path):
 
     isDir = os.path.isdir(path)
     found_items = []
-
     if isDir:
         items = os.listdir(path)
         for item in items:
-            isDir = os.path.isdir(item)
             item_path = os.path.join(path, item)
+            isDir = os.path.isdir(item_path)
             if isDir:
-                return found_items + find_files(suffix, item_path)
+                found_items += find_files(suffix, item_path)
             else:
                 if item.endswith(suffix):
                     found_items.append(item_path)
@@ -35,7 +34,7 @@ def find_files(suffix, path):
         isFile = os.path.isfile(path)
         if isFile:
             if path.endswith(suffix):
-                return path
+                found_items.append(path)
 
     return found_items
 
