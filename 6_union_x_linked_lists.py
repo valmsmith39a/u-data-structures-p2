@@ -1,5 +1,5 @@
 """
-Union and Intersections linked list
+Union and Intersections: Linked List
 
 2 linked lists 
 
@@ -50,27 +50,6 @@ class LinkedList:
         return size
 
 
-"""
-A U B
-
-A or B
-
-a -> hash table
-
-Intersection
-Cycle through 1st l list
-Cycle through 2nd l list
-Put 1st ll in hash
-See if find 2nd one 
-Then add up the ones with 2
-Or put the ones with 2 in a 3 llist
-
-Union is A || B 
-
-
-"""
-
-
 def union(llist_1, llist_2):
     node_1 = llist_1.head
     node_2 = llist_2.head
@@ -93,12 +72,29 @@ def union(llist_1, llist_2):
 
 
 def intersection(llist_1, llist_2):
-    # Your Solution Here
-    pass
+    node_1 = llist_1.head
+    node_2 = llist_2.head
+
+    map_1 = dict()
+    union_list = list()
+
+    while node_1.next != None:
+        value_1 = node_1.value
+        if value_1 not in map_1:
+            map_1[value_1] = 1
+        node_1 = node_1.next
+
+    while node_2.next != None:
+        value_2 = node_2.value
+        if value_2 in map_1:
+            if value_2 not in union_list:
+                union_list.append(value_2)
+        node_2 = node_2.next
+
+    return union_list
 
 
 # Test case 1
-
 linked_list_1 = LinkedList()
 linked_list_2 = LinkedList()
 
