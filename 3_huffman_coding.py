@@ -39,6 +39,9 @@ def get_relative_frequencies(data):
     return rf
 
 
+def build_huffman_tree():
+
+
 class Node(object):
 
     def __init__(self, char=None, freq=None, left=None, right=None):
@@ -46,6 +49,7 @@ class Node(object):
         self.freq = freq
         self.left = None
         self.right = None
+
 
 
 if __name__ == "__main__":
