@@ -88,7 +88,7 @@ def intersection(llist_1, llist_2):
     node_2 = llist_2.head
 
     map_1 = dict()
-    union_list = list()
+    intersection_list = list()
 
     while node_1 != None:
         value_1 = node_1.value
@@ -99,11 +99,11 @@ def intersection(llist_1, llist_2):
     while node_2 != None:
         value_2 = node_2.value
         if value_2 in map_1:
-            if value_2 not in union_list:
-                union_list.append(value_2)
+            if value_2 not in intersection_list:
+                intersection_list.append(value_2)
         node_2 = node_2.next
 
-    return union_list
+    return intersection_list
 
 
 # Test case 1
