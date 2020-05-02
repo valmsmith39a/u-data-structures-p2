@@ -26,6 +26,8 @@ Pseudocode:
 3. Build the Huffman Tree
     assign a binary code to each letter (shorter codes for more frequent letters)
 
+    * implement a priority q using min heap
+
 4. Trim the Huffman Tree
     remove the frequencies from the previous tree
 

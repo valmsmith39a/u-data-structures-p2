@@ -1,8 +1,17 @@
 import sys
+from heapq import heappush, heappop
 
 
 def huffman_encoding(data):
-    rf = get_relative_frequency(data)
+    # relative frequency map
+    rf_map = get_relative_frequencies(data)
+    # build queue of nodes
+    queue = []
+    for rf in rf_map:
+        freq = rf[0]
+        char = rf[1]
+        queue.append(Node(char, freq))
+
     pass
 
 
@@ -10,7 +19,7 @@ def huffman_decoding(data, tree):
     pass
 
 
-def get_relative_frequency(data):
+def get_relative_frequencies(data):
     rf_dict = dict()
     rf = []
     total = len(data)
@@ -30,6 +39,15 @@ def get_relative_frequency(data):
     return rf
 
 
+class Node(object):
+
+    def __init__(self, char=None, freq=None, left=None, right=None):
+        self.char = char
+        self.freq = freq
+        self.left = None
+        self.right = None
+
+
 if __name__ == "__main__":
     codes = {}
 
@@ -39,14 +57,15 @@ if __name__ == "__main__":
         sys.getsizeof(a_great_sentence)))
     print("The content of the data is: {}\n".format(a_great_sentence))
 
-    encoded_data, tree = huffman_encoding(a_great_sentence)
+    print(huffman_encoding(a_great_sentence))
+    # encoded_data, tree = huffman_encoding(a_great_sentence)
 
-    print("The size of the encoded data is: {}\n".format(
-        sys.getsizeof(int(encoded_data, base=2))))
-    print("The content of the encoded data is: {}\n".format(encoded_data))
+    # print("The size of the encoded data is: {}\n".format(
+    #     sys.getsizeof(int(encoded_data, base=2))))
+    # print("The content of the encoded data is: {}\n".format(encoded_data))
 
-    decoded_data = huffman_decoding(encoded_data, tree)
+    # decoded_data = huffman_decoding(encoded_data, tree)
 
-    print("The size of the decoded data is: {}\n".format(
-        sys.getsizeof(decoded_data)))
-    print("The content of the encoded data is: {}\n".format(decoded_data))
+    # print("The size of the decoded data is: {}\n".format(
+    #     sys.getsizeof(decoded_data)))
+    # print("The content of the encoded data is: {}\n".format(decoded_data))
