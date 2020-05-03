@@ -20,7 +20,7 @@ storing the character and frequency.
   https://www.growingwiththeweb.com/data-structures/binary-heap/build-heap-proof/
 
 * To build the Huffman Tree from min-heap, we perform heappop and heappush operations which both take 
-  take O(log(n)) time. We perform the operation for N items, so the result is O(n log n) time
+  take O(log(n)) time. We perform the operation for N items, so the result is O(n log n) time.
   https://www.cs.auckland.ac.nz/software/AlgAnim/huffman.html
 
 * Decoding entails looping through the string of bits which takes O(n) time.
