@@ -1,55 +1,102 @@
 import sys
-from heapq import heappush, heappop
+from heapq import heappush, heappop, heapify
 
 
 def huffman_encoding(data):
-    # relative frequency map
-    rf_map = get_relative_frequencies(data)
-    # build queue of nodes
-    queue = []
-    for rf in rf_map:
-        freq = rf[0]
-        char = rf[1]
-        queue.append(Node(char, freq))
 
-    pass
+    # phase 1: build the Huffman Tree
+
+    # compute frequency of each character
+    frequencies = get_frequencies(data)
+
+    # create a min-heap (binary tree: node <= child node)
+
+    # first build a priority queue
+
+    min_heap = []
+
+    # priority queue
+    for f in frequencies:
+        freq = f[0]
+        char = f[1]
+        min_heap.append(Node(freq, char))
+
+    # create a min-heap from priority queueue
+    heapify(min_heap)
+
+    # build the Huffman Tree from min-heap
+    while len(min_heap) > 1:
+        left_child = heappop(min_heap)
+        right_child = heappop(min_heap)
+        node = Node(left_child.freq + right_child.freq)
+        node.left_child = left_child
+        node.right_child = right_child
+        heappush(min_heap, node)
+
+    # phase 2: generate the encoded data
+
+    # based on Huffman tree, generate unique binary code for each character in the string.
+
+    root_node = heappop(min_heap)
+    root_node_prefix = ''
+    huffman_codes = generate_huffman_codes(root_node, root_node_prefix)
+
+    huffman_code = ''
+
+    # Ex [('0000', 'T'), ('0001', 'w'), ('001', 'i'), ('010', 'h'), ('011', 'd'), ('1000', 'o'), ('1001', 's'),
+    # ('1010', 'b'), ('1011', 't'), ('110', ' '), ('1110', 'e'), ('1111', 'r')]
+
+    for code_pair in huffman_codes:
+        huffman_code += code_pair[0]
+
+    return huffman_code
 
 
 def huffman_decoding(data, tree):
     pass
 
 
-def get_relative_frequencies(data):
-    rf_dict = dict()
-    rf = []
-    total = len(data)
+def get_frequencies(data):
+    freq_dict = dict()
+    frequencies = []
 
     for c in data:
-        if c in rf_dict:
-            rf_dict[c] += 1
+        if c in freq_dict:
+            freq_dict[c] += 1
         else:
-            rf_dict[c] = 1
+            freq_dict[c] = 1
 
-    for key, value in rf_dict.items():
-        rf_value = round(value / total, 3)
-        rf.append((rf_value, key))
+    for key, value in freq_dict.items():
+        frequencies.append((value, key))
 
-    rf.sort(key=lambda x: x[1])
+    frequencies.sort(key=lambda x: x[0])
 
-    return rf
-
-
-def build_huffman_tree():
+    return frequencies
 
 
-class Node(object):
+def generate_huffman_codes(node, prefix):
+    if node is None:
+        return []
+    if node.char is not None:
+        return [(prefix, node.char)]
+    else:
+        huffman_codes = []
+        huffman_codes.extend(generate_huffman_codes(
+            node.left_child, prefix + '0'))
+        huffman_codes.extend(generate_huffman_codes(
+            node.right_child, prefix + '1'))
+        return huffman_codes
 
-    def __init__(self, char=None, freq=None, left=None, right=None):
-        self.char = char
+
+class Node:
+    def __init__(self, freq, char=None):
+        self.left_child = None
+        self.right_child = None
         self.freq = freq
-        self.left = None
-        self.right = None
+        self.char = char
 
+    def __lt__(self, other):
+        return self.freq < other.freq
 
 
 if __name__ == "__main__":
@@ -73,3 +120,7 @@ if __name__ == "__main__":
     # print("The size of the decoded data is: {}\n".format(
     #     sys.getsizeof(decoded_data)))
     # print("The content of the encoded data is: {}\n".format(decoded_data))
+
+# Resources:
+# https://www.studytonight.com/data-structures/huffman-coding
+# https://www.cs.cmu.edu/~tcortina/15-121sp10/Unit06B.pdf
