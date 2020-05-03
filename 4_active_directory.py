@@ -19,6 +19,7 @@ class Group(object):
     def get_name(self):
         return self.name
 
+
 parent = Group("parent")
 child = Group("child")
 sub_child = Group("subchild")
@@ -28,6 +29,7 @@ sub_child.add_user(sub_child_user)
 
 child.add_group(sub_child)
 parent.add_group(child)
+
 
 def is_user_in_group(user, group):
     """
@@ -50,9 +52,26 @@ def is_user_in_group(user, group):
     return False
 
 
+print("--- Test 1 ---")
 print(is_user_in_group('sub_child_user', sub_child))
+# True
+
+print("--- Test 2 ---")
 print(is_user_in_group('sub_child_user', child))
+# True
+
+print("--- Test 3 ---")
 print(is_user_in_group('sub_child_user', parent))
+# True
+
+print("--- Test 4 ---")
 print(is_user_in_group('some_other_child_user', sub_child))
+# False
+
+print("--- Test 5 ---")
 print(is_user_in_group('some_other_child_user', child))
+# False
+
+print("--- Test 6 ---")
 print(is_user_in_group('some_other_child_user', parent))
+# False
