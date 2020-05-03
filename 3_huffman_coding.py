@@ -36,24 +36,32 @@ def huffman_encoding(data):
     # phase 2: generate the encoded data
 
     # based on Huffman tree, generate unique binary code for each character in the string.
-
     root_node = heappop(min_heap)
     root_node_prefix = ''
-    huffman_codes = generate_huffman_codes(root_node, root_node_prefix)
+    huffman_codes_map = generate_huffman_codes(root_node, root_node_prefix)
 
+    # use huffman code map to complete huffman_code
     huffman_code = ''
+    for c in data:
+        huffman_code += huffman_codes_map[c]
 
-    # Ex [('0000', 'T'), ('0001', 'w'), ('001', 'i'), ('010', 'h'), ('011', 'd'), ('1000', 'o'), ('1001', 's'),
-    # ('1010', 'b'), ('1011', 't'), ('110', ' '), ('1110', 'e'), ('1111', 'r')]
-
-    for code_pair in huffman_codes:
-        huffman_code += code_pair[0]
-
-    return huffman_code
+    return huffman_code, root_node
 
 
 def huffman_decoding(data, tree):
-    pass
+    current = tree
+    decoded = ""
+
+    for bit in data:
+        if bit == '0':
+            current = current.left_child
+        else:
+            current = current.right_child
+        if current.left_child is None and current.right_child is None:
+            decoded += current.char
+            current = tree
+
+    return decoded
 
 
 def get_frequencies(data):
@@ -75,17 +83,20 @@ def get_frequencies(data):
 
 
 def generate_huffman_codes(node, prefix):
-    if node is None:
-        return []
-    if node.char is not None:
-        return [(prefix, node.char)]
-    else:
-        huffman_codes = []
-        huffman_codes.extend(generate_huffman_codes(
-            node.left_child, prefix + '0'))
-        huffman_codes.extend(generate_huffman_codes(
-            node.right_child, prefix + '1'))
-        return huffman_codes
+
+    huffman_codes = {}
+
+    def generate_codes(node, prefix=""):
+        if node is None:
+            return
+        if node.right_child is None and node.left_child is None:
+            huffman_codes[node.char] = prefix
+        generate_codes(node.left_child, prefix + '0')
+        generate_codes(node.right_child, prefix + '1')
+
+    generate_codes(node)
+
+    return huffman_codes
 
 
 class Node:
@@ -104,22 +115,24 @@ if __name__ == "__main__":
 
     a_great_sentence = "The bird is the word"
 
-    print("The size of the data is: {}\n".format(
-        sys.getsizeof(a_great_sentence)))
     print("The content of the data is: {}\n".format(a_great_sentence))
 
-    print(huffman_encoding(a_great_sentence))
-    # encoded_data, tree = huffman_encoding(a_great_sentence)
+    print("The size of the data is: {}\n".format(
+        sys.getsizeof(a_great_sentence)))
 
-    # print("The size of the encoded data is: {}\n".format(
-    #     sys.getsizeof(int(encoded_data, base=2))))
-    # print("The content of the encoded data is: {}\n".format(encoded_data))
+    encoded_data, tree = huffman_encoding(a_great_sentence)
 
-    # decoded_data = huffman_decoding(encoded_data, tree)
+    print("The content of the encoded data is: {}\n".format(encoded_data))
 
-    # print("The size of the decoded data is: {}\n".format(
-    #     sys.getsizeof(decoded_data)))
-    # print("The content of the encoded data is: {}\n".format(decoded_data))
+    print("The size of the encoded data is: {}\n".format(
+        sys.getsizeof(int(encoded_data, base=2))))
+
+    decoded_data = huffman_decoding(encoded_data, tree)
+
+    print("The content of the decoded data is: {}\n".format(decoded_data))
+
+    print("The size of the decoded data is: {}\n".format(
+        sys.getsizeof(decoded_data)))
 
 # Resources:
 # https://www.studytonight.com/data-structures/huffman-coding
