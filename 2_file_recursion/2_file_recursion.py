@@ -39,6 +39,20 @@ def find_files(suffix, path):
     return found_items
 
 
+print("--- Test 1 ---")
 suffix = ".c"
 path = "./"
 print(find_files(suffix, path))
+# ['./testdir/subdir3/subsubdir1/b.c', './testdir/t1.c', './testdir/subdir5/a.c', './testdir/subdir1/a.c']
+
+print("--- Test 2 ---")
+suffix = ".h"
+path = "./testdir"
+print(find_files(suffix, path))
+# ['./testdir/subdir3/subsubdir1/b.h', './testdir/subdir5/a.h', './testdir/t1.h', './testdir/subdir1/a.h']
+
+print("--- Test 3 ---")
+suffix = ".txt"
+path = "./"
+print(find_files(suffix, path))
+# []

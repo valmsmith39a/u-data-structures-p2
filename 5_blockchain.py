@@ -62,6 +62,11 @@ print(block_chain.head)
 print(block_chain.head.data)
 print(block_chain.head.timestamp)
 print(block_chain.head.previous_hash)
+# <__main__.Blockchain object at 0x1102757d0>
+# <__main__.Block object at 0x110275810>
+# block 1 data
+# 2020-05-02 19:23:18.413513
+# None
 
 # print("--- Test 2 ---")
 block_chain.append_block('block 2 data')
@@ -70,6 +75,11 @@ print(block_chain.head)
 print(block_chain.head.data)
 print(block_chain.head.timestamp)
 print(block_chain.head.previous_hash)
+# <__main__.Blockchain object at 0x1102757d0>
+# <__main__.Block object at 0x1102758d0>
+# block 2 data
+# 2020-05-02 19:23:18.413610
+# 85d9a6a0536c9e84182261e6bd549c4dc462a4977f32822b30e06dd66935b77e
 
 # print("--- Test 3 ---")
 block_chain.append_block('block 3 data')
@@ -78,3 +88,8 @@ print(block_chain.head)
 print(block_chain.head.data)
 print(block_chain.head.timestamp)
 print(block_chain.head.previous_hash)
+# <__main__.Blockchain object at 0x1102757d0>
+# <__main__.Block object at 0x110275810>
+# block 3 data
+# 2020-05-02 19:23:18.413645
+# 4527648a3fbd8dd06e3018b70fc9661c5e8bfe5b1e6dab5b9f700dfaca517085
