@@ -19,7 +19,6 @@ class Group(object):
     def get_name(self):
         return self.name
 
-
 parent = Group("parent")
 child = Group("child")
 sub_child = Group("subchild")
@@ -29,7 +28,6 @@ sub_child.add_user(sub_child_user)
 
 child.add_group(sub_child)
 parent.add_group(child)
-
 
 def is_user_in_group(user, group):
     """
