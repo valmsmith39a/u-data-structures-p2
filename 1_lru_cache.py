@@ -9,7 +9,7 @@ class LRU_Cache(object):
     Attributes:
         cache (dictionary): stores the key and value
         head (class: Node): tracks head of list
-        tail (class: Node): tracks tail of list 
+        tail (class: Node): tracks tail of list
         size (int): current size of the cache
         capacity (int): max size of the cache
     """
@@ -33,7 +33,9 @@ class LRU_Cache(object):
         # Set the value if the key is not present in the cache. If the cache is at capacity remove the oldest item.
         node = LinkedListNode(key, value)
 
-        if self.size == 5:
+        if self.size == self.capacity:
+            if self.head is None:
+                return
             # get the lru key
             lru_key = self.head.key
 
@@ -55,6 +57,9 @@ class LRU_Cache(object):
                 self.tail = self.tail.next
 
         else:
+            # Prevent negative cache capacity values
+            if self.capacity < 0:
+                return
             # enqueue new item
             if self.head is None:
                 self.head = node
@@ -81,28 +86,40 @@ class LinkedListNode:
 
 our_cache = LRU_Cache(5)
 
-# Test 1
+# Test 1a
 
 our_cache.set(1, 1)
 our_cache.set(2, 2)
 our_cache.set(3, 3)
 
-print("--- Test 1 ---")
+print("--- Test 1a ---")
 print(our_cache.get(1))  # returns 1
 print(our_cache.get(2))  # returns 2
 print(our_cache.get(3))  # returns 3
 
-# Test 2
+# Test 1b
 
-print("--- Test 2 ---")
+print("--- Test 1b ---")
 print(our_cache.get(23))  # returns -1 because 23 does not exist
 
-# Test 3
+# Test 1c
 
 our_cache.set(4, 4)
 our_cache.set(5, 5)
 our_cache.set(6, 6)
-print("--- Test 3 ---")
+print("--- Test 1c ---")
 print(our_cache.get_size())  # returns 5
 print(our_cache.get(6))      # returns 6
 print(our_cache.get(1))      # returns -1 because 1 has been replaced by 6
+
+# Test 2
+print("--- Test 2 ---")
+our_cache_2 = LRU_Cache(0)
+our_cache_2.set(1, 1)
+print(our_cache_2.get(1))    # returns -1
+
+# Test 3
+print("--- Test 3 ---")
+our_cache_3 = LRU_Cache(-1)
+our_cache_3.set(1, 1)
+print(our_cache_3.get(1))   # returns -1
