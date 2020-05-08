@@ -2,7 +2,7 @@
 
 ### Discussion
 
-To create a blockchain, we use a linked list data structure to store 
+To create a blockchain, we use a singly linked list data structure to store 
 a timestamp, user-defined data, a reference to the next block and 
 the hash value of the previous block. A linked list was used because it 
 satisfies the specifications of a blockchain.
