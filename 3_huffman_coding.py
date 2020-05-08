@@ -7,7 +7,7 @@ def huffman_encoding(data):
     Data compression by Huffman coding algorithm.
 
     Parameters:
-        data (str): string data to encode 
+        data (str): string data to encode
 
     Returns:
         huffman_code (str): encoded string of bits
@@ -66,7 +66,7 @@ def huffman_decoding(data, tree):
     Decode Huffman code
 
     Parameters:
-        data (str): string of bits 
+        data (str): string of bits
 
     Returns:
         decoded (str): decoded data in original form
@@ -115,14 +115,14 @@ def get_frequencies(data):
 
 def generate_huffman_codes(node, prefix):
     """
-    Generate Huffman codes for each character by traversing the tree 
+    Generate Huffman codes for each character by traversing the tree
     and assigning '0' to a move towards left child node and '1' to right child node.
 
     Parameters:
         node (class: Node): root node of Huffman Tree
         prefix (str): starting prefix
     Returns:
-        huffman_codes (dictionary): map of characters to generated Huffman codes 
+        huffman_codes (dictionary): map of characters to generated Huffman codes
     """
 
     huffman_codes = {}
@@ -148,7 +148,7 @@ class Node:
         left_child (class: Node): left child of a node
         right_child (class: Node): right child of a node
         freq: frequency of a character
-        char: character 
+        char: character
     """
 
     def __init__(self, freq, char=None):
@@ -162,13 +162,33 @@ class Node:
 
 
 def print_test_results(input_data):
+    encoded_data = ""
+    decoded_data = ""
 
     print("The content of the data is: {}\n".format(input_data))
 
     print("The size of the data is: {}\n".format(
         sys.getsizeof(input_data)))
 
-    encoded_data, tree = huffman_encoding(input_data)
+    if len(get_frequencies(input_data)) == 1:
+
+        encoded_data = len(input_data) * '0'
+
+        print("The content of the encoded data is: {}\n".format(encoded_data))
+
+        print("The size of the encoded data is: {}\n".format(
+            sys.getsizeof(int(encoded_data, base=2))))
+
+        decoded_data = input_data
+
+        print("The content of the decoded data is: {}\n".format(decoded_data))
+
+        print("The size of the decoded data is: {}\n".format(
+            sys.getsizeof(decoded_data)))
+        return
+
+    else:
+        encoded_data, tree = huffman_encoding(input_data)
 
     if encoded_data is None:
         print("No input data")
@@ -234,7 +254,7 @@ if __name__ == "__main__":
 
     The size of the encoded data is: 200
 
-    The content of the decoded data is: 
+    The content of the decoded data is:
     His name was Gaal Dornick and he was just a country boy who had never seen Trantor before.
     That is, not in real life. He had seen it many times on the hyper-video, and occasionally in tremendous
     three-dimensional newscasts covering an Imperial Coronation or the opening of a Galactic Council.
@@ -253,6 +273,13 @@ if __name__ == "__main__":
     """
     No input data
     """
+
+    # *** TEST 4 ***
+
+    print("--- Test 4 ---")
+    input_data = "aaaaaa"
+
+    print_test_results(input_data)
 
 # Resources:
 # https://www.studytonight.com/data-structures/huffman-coding
